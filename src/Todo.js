@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 export default function Todo() {
   const [todoValue, setTodoValue] = useState("");
@@ -142,8 +143,9 @@ export default function Todo() {
   }, []);
 
   return (
-    <div>
-      <form onSubmit={handleTodoSubmit}>
+    <Container>
+      <ContainerForm onSubmit={handleTodoSubmit}>
+        <lable className='margin-right'>Add Todo:</lable>
         <input
           data-testid='new-todo-input'
           value={todoValue}
@@ -152,8 +154,8 @@ export default function Todo() {
         <button data-testid='new-todo-add-button' type='submit'>
           추가
         </button>
-      </form>
-      <ul>
+      </ContainerForm>
+      <ContainerUl>
         {todos.map((todo) => {
           const isEdit = editId === todo.id;
           return isEdit ? (
@@ -173,6 +175,7 @@ export default function Todo() {
               <button
                 data-testid='submit-button'
                 onClick={() => handleEditSubmit(todo)}
+                className='margin-right'
               >
                 제출
               </button>
@@ -196,6 +199,7 @@ export default function Todo() {
               <button
                 onClick={() => handleTodoEdit(todo)}
                 data-testid='modify-button'
+                className='margin-right'
               >
                 수정
               </button>
@@ -208,7 +212,40 @@ export default function Todo() {
             </li>
           );
         })}
-      </ul>
-    </div>
+      </ContainerUl>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  button {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0.2rem;
+    &:hover {
+      background-color: pink;
+    }
+  }
+  input,
+  span,
+  .margin-right {
+    margin-right: 0.5rem;
+  }
+`;
+
+const ContainerForm = styled.form`
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+`;
+
+const ContainerUl = styled.ul`
+  li {
+    margin-top: 0.5rem;
+    list-style: none;
+  }
+`;

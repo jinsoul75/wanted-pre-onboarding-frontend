@@ -1,2 +1,2 @@
 지원자의 성명 : 김진솔
-프로젝트의 실행 방법
+배포링크 : https://magenta-lolly-d4bab6.netlify.app/

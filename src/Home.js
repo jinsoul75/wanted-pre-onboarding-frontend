@@ -25,7 +25,6 @@ const Container = styled.div`
     border: 2px solid pink;
     border-radius: 10px;
     padding: 3rem;
-    cursor: pointer;
     &:hover {
       background-color: pink;
     }

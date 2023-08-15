@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ContainerForm } from './Signup';
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ export default function Signin() {
   },[])
 
   return (
-    <form onSubmit={handleSignup}>
+    <ContainerForm onSubmit={handleSignup}>
       <label>email</label>
       <input
         value={email}
@@ -65,6 +66,6 @@ export default function Signin() {
       <button data-testid='signin-button' type='submit'>
         로그인
       </button>
-    </form>
+    </ContainerForm>
   );
 }
