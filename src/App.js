@@ -1,6 +1,15 @@
+import { Link } from "react-router-dom";
+import { GlobalStyle } from "./GlobalStyle";
+import Router from './Router';
+
 function App() {
   return (
-    <div className="App">
+    <div>
+      <GlobalStyle />
+      <Router/>
+      <button>
+        <Link to="/signup">Sign Up</Link>
+      </button>
     </div>
   );
 }
