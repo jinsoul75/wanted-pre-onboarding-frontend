@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
-import Home from "./Home";
-import Signup from "./Signup";
-import Signin from "./Signin";
-import Todo from "./Todo";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Todo from "./pages/Todo";
 
 export default function Router() {
   return (
