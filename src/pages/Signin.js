@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContainerForm } from './Signup';
+import axiosInstance from '../apis/axiosInstance'
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Signin() {
 
   const handleSignup = (event) => {
     event.preventDefault();
-    axios
+    axiosInstance
       .post(
         "https://www.pre-onboarding-selection-task.shop/auth/signin",
         {
