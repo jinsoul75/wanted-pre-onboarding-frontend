@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-// import { postData } from "../apis/api/defaultApi";
 
 export default function Todo() {
   const [todoValue, setTodoValue] = useState("");

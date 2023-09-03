@@ -3,24 +3,22 @@ import axiosInstance from "../axiosInstance";
 async function makeRequest(method, url, data) {
   try {
     let res;
-
     switch (method) {
       case "GET":
         res = await axiosInstance.get(url);
         break;
       case "POST":
-        res = await axiosInstance(url, data);
+        res = axiosInstance.post(url, data)
         break;
       case "PATCH":
-        res = await axiosInstance(url, data);
+        res = axiosInstance.patch(url, data);
         break;
       case "DELETE":
-        res = await axiosInstance(url);
+        res = axiosInstance.delete(url);
         break;
       default:
         throw new Error("Unsupported HTTP method");
     }
-
     return res.data;
   } catch (error) {
     console.log(error);
