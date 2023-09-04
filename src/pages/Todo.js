@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { authInstance } from "../apis/axiosInstance";
 
 export default function Todo() {
   const [todoValue, setTodoValue] = useState("");
@@ -10,22 +10,13 @@ export default function Todo() {
   const [editTodoValue, setEditTodoValue] = useState("");
 
   const navigate = useNavigate();
-
-  const token = localStorage.getItem("access_token");
-
+  
   const handleTodoSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post(
-        "https://www.pre-onboarding-selection-task.shop/todos",
-        { todo: todoValue },
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    authInstance
+      .post("https://www.pre-onboarding-selection-task.shop/todos", {
+        todo: todoValue,
+      })
       .then((res) => {
         console.log(res.data);
         setTodoValue("");
@@ -40,12 +31,8 @@ export default function Todo() {
   };
 
   const handleTodoDelete = (id) => {
-    axios
-      .delete(`https://www.pre-onboarding-selection-task.shop/todos/${id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+    authInstance
+      .delete(`https://www.pre-onboarding-selection-task.shop/todos/${id}`, {})
       .then((res) => {
         console.log(res);
         setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
@@ -74,20 +61,11 @@ export default function Todo() {
       }
       return t;
     });
-    axios
-      .put(
-        `https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`,
-        {
-          todo: todo.todo,
-          isCompleted: !todo.isCompleted,
-        },
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    authInstance
+      .put(`https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`, {
+        todo: todo.todo,
+        isCompleted: !todo.isCompleted,
+      })
       .then((res) => {
         console.log(res);
         setTodos(updatedTodos);
@@ -102,20 +80,11 @@ export default function Todo() {
       }
       return t;
     });
-    axios
-      .put(
-        `https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`,
-        {
-          todo: editTodoValue,
-          isCompleted: todo.isCompleted,
-        },
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    authInstance
+      .put(`https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`, {
+        todo: editTodoValue,
+        isCompleted: todo.isCompleted,
+      })
       .then((res) => {
         console.log(res);
         setTodos(updatedTodos);
@@ -129,11 +98,7 @@ export default function Todo() {
       navigate("/signin");
       return;
     }
-    axios("https://www.pre-onboarding-selection-task.shop/todos", {
-      headers: {
-        Authorization: token,
-      },
-    })
+    authInstance("https://www.pre-onboarding-selection-task.shop/todos")
       .then((res) => {
         console.log(res);
         setTodos(res.data);

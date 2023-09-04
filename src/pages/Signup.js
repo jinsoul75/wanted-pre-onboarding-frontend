@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import axiosInstance from "../apis/axiosInstance";
+import { instance } from "../apis/axiosInstance";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -25,16 +25,12 @@ export default function Signup() {
 
   const handleSignup = (event) => {
     event.preventDefault();
-    axiosInstance
-      .post(
-        "https://www.pre-onboarding-selection-task.shop/auth/signup",
-        {
-          email,
-          password,
-        },
-      )
+    instance
+      .post("https://www.pre-onboarding-selection-task.shop/auth/signup", {
+        email,
+        password,
+      })
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           navigate("/signin");
         }
