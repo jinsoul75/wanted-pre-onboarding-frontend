@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ContainerForm } from './Signup';
-import axiosInstance from '../apis/axiosInstance'
+import { ContainerForm } from "./Signup";
+import { instance } from "../apis/axiosInstance";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -18,35 +18,30 @@ export default function Signin() {
 
   const handleSignup = (event) => {
     event.preventDefault();
-    axiosInstance
-      .post(
-        "https://www.pre-onboarding-selection-task.shop/auth/signin",
-        {
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    instance
+      .post("https://www.pre-onboarding-selection-task.shop/auth/signin", {
+        email,
+        password,
+      })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          localStorage.setItem('access_token', `Bearer ${res.data.access_token}`);
+          localStorage.setItem(
+            "access_token",
+            `Bearer ${res.data.access_token}`
+          );
           navigate("/todo");
         }
       })
       .catch((error) => console.log(error));
   };
 
-  useEffect(()=>{
-    if(localStorage.getItem('access_token')){
-      navigate('/todo');
+  useEffect(() => {
+    if (localStorage.getItem("access_token")) {
+      navigate("/todo");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ContainerForm onSubmit={handleSignup}>
