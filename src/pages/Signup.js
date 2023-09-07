@@ -26,7 +26,7 @@ export default function Signup() {
   const handleSignup = (event) => {
     event.preventDefault();
     instance
-      .post("https://www.pre-onboarding-selection-task.shop/auth/signup", {
+      .post("/auth/signup", {
         email,
         password,
       })
@@ -35,7 +35,6 @@ export default function Signup() {
           navigate("/signin");
         }
       })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
