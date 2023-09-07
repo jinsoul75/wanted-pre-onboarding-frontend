@@ -19,7 +19,7 @@ export default function Signin() {
   const handleSignup = (event) => {
     event.preventDefault();
     instance
-      .post("https://www.pre-onboarding-selection-task.shop/auth/signin", {
+      .post("/auth/signin", {
         email,
         password,
       })
@@ -33,7 +33,6 @@ export default function Signin() {
           navigate("/todo");
         }
       })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {

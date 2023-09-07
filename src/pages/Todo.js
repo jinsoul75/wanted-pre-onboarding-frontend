@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { authInstance } from "../apis/axiosInstance";
+import { instance } from "../apis/axiosInstance";
 
 export default function Todo() {
   const [todoValue, setTodoValue] = useState("");
@@ -10,11 +10,11 @@ export default function Todo() {
   const [editTodoValue, setEditTodoValue] = useState("");
 
   const navigate = useNavigate();
-  
+
   const handleTodoSubmit = (event) => {
     event.preventDefault();
-    authInstance
-      .post("https://www.pre-onboarding-selection-task.shop/todos", {
+    instance
+      .post("/todos", {
         todo: todoValue,
       })
       .then((res) => {
@@ -27,17 +27,15 @@ export default function Todo() {
         };
         setTodos((prevTodos) => [...prevTodos, newTodo]);
       })
-      .catch((error) => console.log(error));
   };
 
   const handleTodoDelete = (id) => {
-    authInstance
-      .delete(`https://www.pre-onboarding-selection-task.shop/todos/${id}`, {})
+    instance
+      .delete(`/todos/${id}`, {})
       .then((res) => {
         console.log(res);
         setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
       })
-      .catch((error) => console.log(error));
   };
 
   const handleTodoEdit = (todo) => {
@@ -61,8 +59,8 @@ export default function Todo() {
       }
       return t;
     });
-    authInstance
-      .put(`https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`, {
+    instance
+      .put(`/todos/${todo.id}`, {
         todo: todo.todo,
         isCompleted: !todo.isCompleted,
       })
@@ -70,7 +68,6 @@ export default function Todo() {
         console.log(res);
         setTodos(updatedTodos);
       })
-      .catch((res) => console.log(res));
   };
 
   const handleEditSubmit = (todo) => {
@@ -80,8 +77,8 @@ export default function Todo() {
       }
       return t;
     });
-    authInstance
-      .put(`https://www.pre-onboarding-selection-task.shop/todos/${todo.id}`, {
+    instance
+      .put(`todos/${todo.id}`, {
         todo: editTodoValue,
         isCompleted: todo.isCompleted,
       })
@@ -90,7 +87,6 @@ export default function Todo() {
         setTodos(updatedTodos);
         setEditId(0);
       })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -98,19 +94,18 @@ export default function Todo() {
       navigate("/signin");
       return;
     }
-    authInstance("https://www.pre-onboarding-selection-task.shop/todos")
+    instance("/todos")
       .then((res) => {
         console.log(res);
         setTodos(res.data);
       })
-      .catch((error) => console.log(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container>
       <ContainerForm onSubmit={handleTodoSubmit}>
-        <lable className='margin-right'>Add Todo:</lable>
+        <label className='margin-right'>Add Todo:</label>
         <input
           data-testid='new-todo-input'
           value={todoValue}
@@ -125,18 +120,17 @@ export default function Todo() {
           const isEdit = editId === todo.id;
           return isEdit ? (
             <li key={todo.id}>
-              <label>
-                <input
-                  type='checkbox'
-                  checked={todo.isCompleted}
-                  onChange={() => handleCheckboxChange(todo)}
-                />
-                <input
-                  data-testid='modify-input'
-                  value={editTodoValue}
-                  onChange={handleEditTodoValueChange}
-                />
-              </label>
+              <input
+                type='checkbox'
+                checked={todo.isCompleted}
+                onChange={() => handleCheckboxChange(todo)}
+              />
+              <input
+                data-testid='modify-input'
+                value={editTodoValue}
+                onChange={handleEditTodoValueChange}
+              />
+
               <button
                 data-testid='submit-button'
                 onClick={() => handleEditSubmit(todo)}
@@ -153,14 +147,13 @@ export default function Todo() {
             </li>
           ) : (
             <li key={todo.id}>
-              <label>
-                <input
-                  type='checkbox'
-                  checked={todo.isCompleted}
-                  onChange={() => handleCheckboxChange(todo)}
-                />
-                <span>{todo.todo}</span>
-              </label>
+              <input
+                type='checkbox'
+                checked={todo.isCompleted}
+                onChange={() => handleCheckboxChange(todo)}
+              />
+              <span>{todo.todo}</span>
+
               <button
                 onClick={() => handleTodoEdit(todo)}
                 data-testid='modify-button'
